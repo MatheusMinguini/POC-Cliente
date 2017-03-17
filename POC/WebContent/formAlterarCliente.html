@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+<meta charset="UTF-8">
+<title>Cadastrar</title>
+
+<script src="js/angular.min.js"></script>
+<script src="js/ClienteCtrl.js"></script>
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<style>
+
+	#required{
+		color: red;
+		font-weight: bold;
+		font-size: 150%;
+	}
+	
+	#advice{
+		color: grey;
+		font-weight: bold;
+	}
+</style>
+
+</head>
+<body ng-app = "Cliente">
+
+<form name="alterar" ng-controller="ClienteAtualizar">
+
+<div class = "row">
+	<div class="col-md-12">
+	
+		<div class = "row">
+			<div class = "col-md-12">
+				<h5 id = "advice"> Os campos com o sinal <span id="required">'*'</span> 
+				são obrigatórios, você não irá poder clicar no botão, se não preenchê-los
+				</h5>
+			</div>
+		</div>
+		
+		<fieldset>
+		<legend>INFORMAÇÕES CADASTRAIS</legend>
+		
+			<input type = "hidden" ng-model="cliente.id" />
+		
+			<div class = "col-md-4">
+				<label>Nome <span id="required"> * </span></label>
+				<input type="text" class = "form-control" ng-model="cliente.nome" ng-required = "true">
+			</div>
+				
+			<div class = "col-md-4">
+				<label>RG <span id="required"> * </span></label>
+				<input type="text" class = "form-control" ng-model="cliente.rg" ng-blur="validaRG()" ng-required = "true">
+			</div>
+			
+			<div class = "col-md-4">
+				<label>CPF <span id="required"> * </span></label>
+				<input type="text" class = "form-control" ng-model="cliente.cpf" maxlength = "11" ng-blur = "validaCPF()" ng-required = "true">
+			</div>
+			
+			<div class = "col-md-4">
+				<label>Categoria <span id="required"> * </span></label>
+				<select class = "form-control" ng-required = "true" ng-model="cliente.categoria" ng-options="categoria.id as categoria.descricao for categoria in categorias"  material-select watch>
+					<option value="">Selecione uma categoria</option>
+				</select>
+			</div>
+			
+		</fieldset>
+	</div>
+</div>
+
+<br/>
+
+<div class = "row">
+	<div class = "col-md-12">
+		<fieldset>
+			<legend>ENDEREÇO</legend>
+			
+			<p id = "advice">Digite o seu CEP, buscaremos o endereço para você</p>
+			
+			<div class = "row">
+				<div class = "col-md-6">
+					<div class = "col-md-12">
+						<label>CEP</label>
+						<input type="text" class = "form-control" ng-model="cliente.cep" ng-blur = "buscaCep()">
+						<br/>
+					</div>
+				</div>
+				
+			</div>
+			
+			<div ng-if = "cliente.logradouro != null">
+				<div class = "col-md-4">
+					<label>Rua/Avenida</label>
+					<input readonly type="text" class = "form-control" ng-model="cliente.logradouro">
+				</div>
+				
+				<div class = "col-md-4">
+					<label>Número</label>
+					<input type="number" class = "form-control" ng-model="cliente.numero">
+				</div>
+			
+				
+				<div class = "col-md-4">
+					<label>Bairro</label>
+					<input readonly class = "form-control" type="text" ng-model="cliente.bairro">
+				</div>
+				
+				<div class = "col-md-4">
+					<label>Complemento</label>
+					<input readonly ="text" class = "form-control" ng-model="cliente.complemento">
+				</div>
+			
+				<div class = "col-md-4">
+					<label>Cidade</label>
+					<input readonly type="text" class = "form-control" ng-model="cliente.cidade">
+				</div>
+			
+				<div class = "col-md-4">
+					<label>Estado</label>
+					<input readonly type="text" class = "form-control" ng-model="cliente.estado">
+				</div>
+			</div>
+		</fieldset>
+	</div>
+</div>
+
+<div class="form-actions right pull-right">
+	<button class="btn btn-danger" ng-click = "voltar()"><i class = "glyphicon glyphicon-triangle-left"></i></button>
+	<button class="btn btn-success" ng-disabled="alterar.$invalid" ng-click="atualizar()"><i class = "glyphicon glyphicon-ok"></i></button>	
+</div>
+
+</form>
+
+
+</body>
+</html>

@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Consultar</title>
+
+<link href="bootstrap/css/bootstrap.min.css" rel="stylesheet">
+
+<script src="js/angular.min.js"></script>
+<script src="js/ClienteCtrl.js"></script>
+
+<style>
+
+	#required{
+		color: red;
+		font-weight: bold;
+		font-size: 150%;
+	}
+	
+	#advice{
+		color: grey;
+		font-weight: bold;
+	}
+	
+	#titulo-painel {
+		color: white;
+		background-color: #7e7e7e;
+		font-weight: bold;
+	}
+	
+	#painel{
+		width: 70%;
+		margin-right: auto;
+		margin-left: auto;
+	}
+	
+	#column{
+		color: #7e7e7e;
+		font-weight: bold;
+	}
+	
+	#add{
+		margin-left: 205px;
+	}
+	
+	#msg{
+		margin-left: 35%;
+	}
+
+</style>
+
+
+</head>
+<body ng-app = "Cliente">
+
+<div ng-controller="ClienteCrud">
+
+	<br/></br>
+	
+	<div class="container">
+		<div class="input-group col-md-5 col-md-offset-4">	
+				<input type = "text" ng-model = "filtro" class="form-control" placeholder = "Digite o nome do cliente ..."/>
+				<span class="input-group-addon"> 
+					<span class="glyphicon glyphicon-search"></span>
+				</span>
+		</div>
+		
+		<div id="msg">
+				<p id = "advice"> Clique no título da coluna, para ordenar por aquele campo <span id = "required">*</span><p> 
+		</div>
+	</div>
+	
+	<br/><br/>
+	
+	<div id="add">
+		<button ng-click = "formCadastro()" class = "btn btn-info"><i class= "glyphicon glyphicon-plus"></i></button>
+	</div>
+	
+	<div id = "painel" class="panel panel-default">
+		<div id = "titulo-painel" class="panel-heading"><center>Clientes</center></div>
+  		<div class="panel-body">
+		  	<table class = "table table-striped">
+				<tr>
+					<th><a id = "column" href = "#" ng-click = "ordenar('nome')"><center>Nome</center></a></th>
+					<th><a id = "column" href = "#" ng-click = "ordenar('nome')"><center>CPF</center></a></th>
+					<th><a id = "column" href = "#" ng-click = "ordenar('nome')"><center>RG</center></a></th>
+					<th id = "column"><center>Detalhes</center></th>
+					<th id = "column"><center>Editar</center></th>
+					<th id = "column"><center>Remover</center></th>
+				</tr>
+			
+				<tr ng-repeat = "x in response | filter: {nome: filtro} | orderBy: criterio">
+					<td><center>{{x.nome}}</center></td>
+					<td><center>{{x.cpf}}</center></td>
+					<td><center>{{x.rg}}</center></td>
+					<td>
+						<center><button class = "btn btn-default"><i  class = "glyphicon glyphicon-folder-open"></i></button></center>
+						
+					</td>
+					<td>
+						<center><button class = "btn btn-warning" ng-click = "addSessionStorage(x)"><i  class = "glyphicon glyphicon-pencil"></i></button></center>
+					</td>	
+					<td>
+						<center><button class = "btn btn-danger" ng-click = "deletar(x.id)"><i  class = "glyphicon glyphicon-trash"></i></button></center>
+					</td>			
+				</tr>
+			</table>
+  		</div>
+	</div>
+
+
+</div>
+
+
+
+</body>
+</html>
